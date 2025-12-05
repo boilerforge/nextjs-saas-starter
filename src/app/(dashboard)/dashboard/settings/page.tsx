@@ -2,6 +2,7 @@
 // SETTINGS PAGE
 // ============================================================================
 // User account settings and profile management.
+// NOTE: Profile editing functionality is a placeholder for you to implement.
 // ============================================================================
 
 import { getServerSession } from "next-auth";
@@ -13,8 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { User } from "lucide-react";
 
 export default async function SettingsPage() {
@@ -30,13 +29,11 @@ export default async function SettingsPage() {
         </p>
       </div>
 
-      {/* Profile Settings */}
+      {/* Profile Information (Read-only) */}
       <Card>
         <CardHeader>
           <CardTitle>Profile</CardTitle>
-          <CardDescription>
-            Update your personal information
-          </CardDescription>
+          <CardDescription>Your account information</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Avatar */}
@@ -53,98 +50,45 @@ export default async function SettingsPage() {
               </div>
             )}
             <div>
-              <Button variant="outline" size="sm">
-                Change Avatar
-              </Button>
-              <p className="mt-1 text-xs text-zinc-500">
-                JPG, PNG or GIF. Max 2MB.
-              </p>
+              <p className="font-medium">{session?.user?.name || "User"}</p>
+              <p className="text-sm text-zinc-500">{session?.user?.email}</p>
             </div>
           </div>
 
-          {/* Name */}
-          <div className="space-y-2">
-            <label htmlFor="name" className="text-sm font-medium">
-              Name
-            </label>
-            <Input
-              id="name"
-              defaultValue={session?.user?.name || ""}
-              placeholder="Your name"
-            />
-          </div>
-
-          {/* Email (read-only) */}
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium">
-              Email
-            </label>
-            <Input
-              id="email"
-              type="email"
-              defaultValue={session?.user?.email || ""}
-              disabled
-            />
-            <p className="text-xs text-zinc-500">
-              Email cannot be changed. Contact support if needed.
+          {/* Info about editing */}
+          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              <strong>Developer Note:</strong> Profile editing, password changes,
+              and account deletion can be implemented by adding server actions or
+              API routes. See the{" "}
+              <code className="rounded bg-zinc-200 px-1 dark:bg-zinc-800">
+                /api/auth/register
+              </code>{" "}
+              route for an example pattern.
             </p>
           </div>
-
-          <Button>Save Changes</Button>
         </CardContent>
       </Card>
 
-      {/* Password */}
+      {/* Subscription Status */}
       <Card>
         <CardHeader>
-          <CardTitle>Password</CardTitle>
+          <CardTitle>Subscription</CardTitle>
           <CardDescription>
-            Change your password to keep your account secure
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <label htmlFor="current" className="text-sm font-medium">
-              Current Password
-            </label>
-            <Input id="current" type="password" />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="new" className="text-sm font-medium">
-              New Password
-            </label>
-            <Input id="new" type="password" />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="confirm" className="text-sm font-medium">
-              Confirm New Password
-            </label>
-            <Input id="confirm" type="password" />
-          </div>
-          <Button>Update Password</Button>
-        </CardContent>
-      </Card>
-
-      {/* Danger Zone */}
-      <Card className="border-red-200 dark:border-red-800">
-        <CardHeader>
-          <CardTitle className="text-red-600 dark:text-red-400">
-            Danger Zone
-          </CardTitle>
-          <CardDescription>
-            Irreversible actions that affect your account
+            Manage your subscription and billing
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-medium">Delete Account</p>
-              <p className="text-sm text-zinc-500">
-                Permanently delete your account and all associated data
-              </p>
-            </div>
-            <Button variant="destructive">Delete Account</Button>
-          </div>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            Visit the{" "}
+            <a
+              href="/dashboard/billing"
+              className="font-medium text-blue-600 hover:underline dark:text-blue-400"
+            >
+              Billing page
+            </a>{" "}
+            to manage your subscription, update payment methods, or view invoices.
+          </p>
         </CardContent>
       </Card>
     </div>

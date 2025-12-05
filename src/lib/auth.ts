@@ -30,6 +30,8 @@ export const authOptions: NextAuthOptions = {
   // serverless deployments (no database lookup on every request)
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // Refresh token if older than 24 hours
   },
 
   // Define authentication pages (these are custom routes you control)

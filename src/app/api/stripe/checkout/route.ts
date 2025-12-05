@@ -38,9 +38,22 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { priceId } = body;
 
-    if (!priceId) {
+    if (!priceId || typeof priceId !== "string") {
       return NextResponse.json(
         { error: "Price ID is required" },
+        { status: 400 }
+      );
+    }
+
+    // Validate priceId against allowed values (security: prevent arbitrary price IDs)
+    const allowedPriceIds = [
+      process.env.STRIPE_PRO_PRICE_ID,
+      process.env.STRIPE_ENTERPRISE_PRICE_ID,
+    ].filter(Boolean);
+
+    if (allowedPriceIds.length > 0 && !allowedPriceIds.includes(priceId)) {
+      return NextResponse.json(
+        { error: "Invalid price ID" },
         { status: 400 }
       );
     }

@@ -6,10 +6,7 @@
 
 "use client";
 
-import { signOut } from "next-auth/react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { User, Settings, LogOut } from "lucide-react";
+import { User } from "lucide-react";
 
 interface UserNavProps {
   user: {

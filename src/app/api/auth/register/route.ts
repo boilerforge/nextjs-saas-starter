@@ -39,17 +39,16 @@ function validatePassword(password: string): string | null {
   if (password.length > 128) {
     return "Password must be less than 128 characters";
   }
-  // Optional: Add complexity requirements
-  // Uncomment below for stricter passwords:
-  // if (!/[A-Z]/.test(password)) {
-  //   return "Password must contain at least one uppercase letter";
-  // }
-  // if (!/[a-z]/.test(password)) {
-  //   return "Password must contain at least one lowercase letter";
-  // }
-  // if (!/[0-9]/.test(password)) {
-  //   return "Password must contain at least one number";
-  // }
+  // Require at least one uppercase, one lowercase, and one number
+  if (!/[A-Z]/.test(password)) {
+    return "Password must contain at least one uppercase letter";
+  }
+  if (!/[a-z]/.test(password)) {
+    return "Password must contain at least one lowercase letter";
+  }
+  if (!/[0-9]/.test(password)) {
+    return "Password must contain at least one number";
+  }
   return null;
 }
 
